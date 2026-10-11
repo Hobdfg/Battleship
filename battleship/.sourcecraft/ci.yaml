@@ -1,0 +1,19 @@
+on:
+  push:
+    - workflows: [game-tests]
+      filter:
+        branches: ["main"]
+  pull_request:
+    - workflows: [game-tests]
+      filter:
+        source_branches: ["**"]
+        target_branches: ["main"]
+workflows:
+  game-tests:
+    tasks:
+      - name: playable-base
+        cubes:
+          - name: base-rules
+            image: docker.io/library/python:3.13-slim
+            script:
+              - python tests.py
